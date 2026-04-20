@@ -1,0 +1,69 @@
+name: CI Backend Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+      - "release/**"
+      - "hotfix/**"
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repo
+        uses: actions/checkout@v4
+
+      - name: Crear .env
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_NAME=userdb" >> .env
+          echo "DB_TEST_NAME=userdb_test" >> .env
+          echo "DB_HOST=postgres-test" >> .env
+          echo "NODE_ENV=test" >> .env
+
+      - name: Ejecutar Unit Tests
+        run: |
+          docker-compose run --rm api npm run test:unit
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+      - name: Clonar repo
+        uses: actions/checkout@v4
+
+      - name: Crear .env
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_NAME=userdb" >> .env
+          echo "DB_TEST_NAME=userdb_test" >> .env
+          echo "DB_HOST=postgres-test" >> .env
+          echo "NODE_ENV=test" >> .env
+
+      - name: Levantar base de datos de prueba
+        run: docker-compose up -d postgres-test
+
+      - name: Esperar DB lista
+        run: sleep 10
+
+      - name: Ejecutar Integration Tests
+        run: |
+          docker-compose run --rm api npm run test:integration
+
+      - name: Logs si falla
+        if: failure()
+        run: docker-compose logs
