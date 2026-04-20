@@ -1,5 +1,5 @@
 FROM node:25-alpine
-
+# Create app directory
 WORKDIR /app
 
 COPY package*.json ./
