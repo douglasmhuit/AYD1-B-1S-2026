@@ -33,16 +33,16 @@ jobs:
           echo "NODE_ENV=test" >> .env
 
       - name: Levantar servicios
-        run: docker compose up -d
+        run: docker compose up -d postgres-test
 
       - name: Esperar DB
         run: sleep 10
 
       - name: Unit Tests
-        run: docker compose exec -T api npm run test:unit
+        run: docker compose run --rm api npm run test:unit
 
       - name: Integration Tests
-        run: docker compose exec -T api npm run test:integration
+        run: docker compose run --rm api npm run test:integration
 
       - name: Logs si falla
         if: failure()
