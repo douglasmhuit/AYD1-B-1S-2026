@@ -19,8 +19,7 @@ WORKDIR /app
 COPY --from=builder /app ./
 
 # Instalar solo dependencias de producción
-RUN npm ci --omit=dev
-
+RUN npm ci 
 EXPOSE 3000
 
 CMD ["npm", "start"]
