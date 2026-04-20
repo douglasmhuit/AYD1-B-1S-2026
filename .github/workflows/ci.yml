@@ -90,13 +90,13 @@ jobs:
 
       - name: 🔍 Verificar API
         run: |
-          curl -f http://localhost:3000 || exit 1
+          curl -f http://localhost:3000/health | grep "OK"
 
-      - name: 📋 Logs si falla
+      - name: Logs si falla
         if: failure()
         run: docker logs backend-test
 
-      - name: 🧹 Limpiar contenedor
+      - name:  Limpiar contenedor
         if: always()
         run: |
           docker stop backend-test
