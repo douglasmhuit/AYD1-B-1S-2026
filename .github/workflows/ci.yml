@@ -25,8 +25,8 @@ jobs:
 
       - name: Crear .env
         run: |
-          echo "DB_USER=test" >> .env
-          echo "DB_PASSWORD=test" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "DB_NAME=userdb" >> .env
           echo "DB_TEST_NAME=userdb_test" >> .env
           echo "DB_HOST=postgres-test" >> .env
