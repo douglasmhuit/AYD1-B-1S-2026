@@ -34,7 +34,7 @@ jobs:
 
       - name: Ejecutar Unit Tests
         run: |
-          docker-compose run --rm api npm run test:unit
+          docker compose run --rm api npm run test:unit
 
   integration-tests:
     name: Integration Tests
