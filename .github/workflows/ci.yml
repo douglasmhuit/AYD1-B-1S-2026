@@ -55,15 +55,15 @@ jobs:
           echo "NODE_ENV=test" >> .env
 
       - name: Levantar base de datos de prueba
-        run: docker-compose up -d postgres-test
+        run: docker compose up -d postgres-test
 
       - name: Esperar DB lista
         run: sleep 10
 
       - name: Ejecutar Integration Tests
         run: |
-          docker-compose run --rm api npm run test:integration
+          docker compose run --rm api npm run test:integration
 
       - name: Logs si falla
         if: failure()
-        run: docker-compose logs
+        run: docker compose logs
