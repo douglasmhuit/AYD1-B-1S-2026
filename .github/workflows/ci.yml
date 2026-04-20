@@ -100,4 +100,4 @@ jobs:
 
       - name:  Limpiar contenedor
         if: always()
-        run: run: docker compose down
+        run: docker compose down
