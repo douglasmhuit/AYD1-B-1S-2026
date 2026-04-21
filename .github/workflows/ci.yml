@@ -82,7 +82,7 @@ jobs:
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "DB_NAME=userdb" >> .env
           echo "DB_HOST=postgres" >> .env
-          echo "NODE_ENV=production" >> .env
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
 
       - name: Levantar servicios (API + DB)
         run: docker compose up -d
