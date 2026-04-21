@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/api', userRoutes);
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.json({ status: 'OK', message: 'Service is running' });
 });
 
 if (process.env.NODE_ENV !== 'test') {
